@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.js"></script>
+    <link rel="stylesheet" href="static/styles/style.css">
+    <script src="static/styles/main.js" type="text/javascript" language="javascript"></script>
+  </head>
+  <body>
+      <h1 class="title">OFACTORY REPORT</h1>
+      <div class="box"><p><strong>OFAC Data Last Update</strong>  <br> {{ date['max_date'] }}</p></div>
+      <div class="box"><p> <strong>Orders to Scan</strong>  <br> {{ order_no['count'] }}</p></div>
+      <div class="box"><p><strong>Grey List/White List/Black List</strong><br>{{ list_match['count'] }}</p></div>
+      <div class="box"><p> <strong>Order Dispositions</strong> <br> passed: {{ disposition['passed'] }}% | whitelisted: {{ disposition['whitelist'] }}% | blacklisted: {{ disposition['blacklist'] }}%</p></div>
+      <br><br><br>
+      <form action="/filtered_list" method="get" class="time" id="time">
+        <label for="from">From</label>
+        <input type="date" id="from" name="from">
+        <label for="to">To</label>
+        <input type="date" id="to" name="to">
+        <input type="submit" value="Run Report">
+      </form>
+      <br><br><br>
+      <div class="container">
+        <div class="panel panel-default"> 
+             <div class="panel-body"> 
+                 <div class="table-responsive"> 
+                     <table id="ofac-table" class="table table-bordered table-striped">
+                         <thead>
+                             <tr>
+                                 <th>_id</th>
+                                 <th>captured_date</th>
+                                 <th>order_id</th>
+                                 <th>cert_serial_number</th>
+                                 <th>order_person_name</th>
+                                 <th>order_org_name</th>
+                                 <th>order_address</th>
+                                 <th>order_common_name</th>
+                                 <th>disposition</th>
+                                 <th>flagged_field</th>
+                                 <th>sys_source</th>
+                                 <th>greylist_reason</th>
+                                 <th>greylist_match_value</th>
+                                 <th>match_score</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                            {% for row in ofac %}
+                             <tr>
+                                <td data-pk="{{row._id}}">{{row._id}}</td>
+                                <td data-name="captured_date" class="captured_date" data-type="text" data-pk="{{row._id}}">{{row.captured_date}}</td>
+                                <td data-name="order_id" class="order_id" data-type="text" data-pk="{{row._id}}">{{row.order_id}}</td>
+                                <td data-name="cert_serial_number" class="cert_serial_number" data-type="text" data-pk="{{row._id}}">{{row.cert_serial_number}}</td>
+                                <td data-name="order_person_name" class="order_person_name" data-type="text" data-pk="{{row._id}}">{{row.order_person_name}}</td>
+                                <td data-name="order_org_name" class="order_org_name" data-type="text" data-pk="{{row._id}}">{{row.order_org_name}}</td>
+                                <td data-name="order_address" class="order_address" data-type="text" data-pk="{{row._id}}">{{row.order_order_address}}</td>
+                                <td data-name="order_common_name" class="order_common_name" data-type="text" data-pk="{{row._id}}">{{row.order_common_name}}</td>
+                                <td data-name="disposition" class="disposition" data-type="select" data-pk="{{row._id}}">{{row.disposition}}</td> 
+                                <td data-name="flagged_field" class="flagged_field" data-type="text" data-pk="{{row._id}}">{{row.flagged_field}}</td>
+                                <td data-name="sys_source" class="sys_source" data-type="text" data-pk="{{row._id}}">{{row.sys_source}}</td>
+                                <td data-name="greylist_reason" class="greylist_reason" data-type="text" data-pk="{{row._id}}">{{row.greylist_reason}}</td>
+                                <td data-name="greylist_match_value" class="greylist_match_value" data-type="text" data-pk="{{row._id}}">{{row.greylist_match_value}}</td>
+                                <td data-name="match_score" class="match_score" data-type="text" data-pk="{{row._id}}">{{row.match_score}}</td>
+                            {% endfor %}
+                             </tr>
+                         </tbody>
+                     </table>
+                 </div>
+             </div> 
+        </div> 
+    </div> 
+    <br><br><br>
+    <a href='/download_csv'><button class='button'>Click here to download!</button></a>
+  </body>
+  <br><br><br>
+  <footer>
+      <h3 class="footer">&copy; Data Engineering 2022</h3>
+  </footer>
+</html>
