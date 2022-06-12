@@ -27,17 +27,8 @@
     margin-right: 40px
 }
 
-.container {
-    width: 95%;
-    height: auto;
-}
-
-.panel-body {
-    border: none;
-}
-
 .button {
-    width: auto;
+    width: 300px;
     height: 40px;
     background-color: rgb(192, 192, 192);
     color: black;
@@ -45,11 +36,20 @@
     border-radius: 4px;
     font-size: large;
     cursor: pointer;
-    margin-left: 1600px;
+    margin-left: 1500px;
 }
 
 .button:hover {
     opacity: 0.5;
+}
+
+.container {
+    width: 95%;
+    height: auto;
+}
+
+.panel-body {
+    border: none;
 }
 
 .footer {

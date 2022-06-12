@@ -23,12 +23,13 @@
       <div class="box"><p><strong>Grey List/White List/Black List</strong><br>{{ list_match['count'] }}</p></div>
       <div class="box"><p> <strong>Order Dispositions</strong> <br> passed: {{ disposition['passed'] }}% | whitelisted: {{ disposition['whitelist'] }}% | blacklisted: {{ disposition['blacklist'] }}%</p></div>
       <br><br><br>
-      <form action="/filtered_list" method="get" class="time" id="time">
+      <form action="/filtered_list" method="post" class="time" id="time">
         <label for="from">From</label>
-        <input type="date" id="from" name="from">
+        <input type="date" id="from" name="from" required>
         <label for="to">To</label>
-        <input type="date" id="to" name="to">
-        <input type="submit" value="Run Report">
+        <input type="date" id="to" name="to" required>
+        <input type="submit" name="action" value="Run Report">
+        <input type="submit" name="action" value="Click here to download!" class='button'>
       </form>
       <br><br><br>
       <div class="container">
@@ -79,8 +80,6 @@
              </div> 
         </div> 
     </div> 
-    <br><br><br>
-    <a href='/download_csv'><button class='button'>Click here to download!</button></a>
   </body>
   <br><br><br>
   <footer>
