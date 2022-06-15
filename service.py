@@ -72,5 +72,3 @@ def insert_db(_created, order_id, cert_serial_number , disposition):
             cursor.execute('''INSERT INTO data_warehouse.ofactory_disposition (_created, order_id, cert_serial_number , disposition)
                                 VALUES (%s, %s, %s, %s);''', (_created, order_id, cert_serial_number , disposition))
             connection.commit()
-
-

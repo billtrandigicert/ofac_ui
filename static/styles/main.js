@@ -54,10 +54,10 @@ $(document).ready(function () {
     };
     console.log(result);
 
-    // $.post (
-    //   url = "/update_list",
-    //   result = result
-    // )
+    $.post (
+      url = "/update_list",
+      result = result
+    )
   });
 });
 
