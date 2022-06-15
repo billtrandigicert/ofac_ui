@@ -9,7 +9,7 @@
 .box {
     border: 2px solid #000;
     border-radius: 4px;
-    width: 360px;
+    width: 300px;
     height: 80px;
     display: inline-block;
     font-family: Arial;
@@ -28,7 +28,7 @@
 }
 
 .button {
-    width: 300px;
+    width: 220px;
     height: 40px;
     background-color: rgb(192, 192, 192);
     color: black;
@@ -36,7 +36,7 @@
     border-radius: 4px;
     font-size: large;
     cursor: pointer;
-    margin-left: 1500px;
+    margin-left: 1400px;
 }
 
 .button:hover {
@@ -55,4 +55,5 @@
 .footer {
   color: black;
   text-align: center;
+  margin-bottom: 50px;
 }

@@ -1,5 +1,4 @@
-from crypt import methods
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request
 import flask_excel as excel
 from datetime import timedelta
 import json
@@ -37,9 +36,19 @@ def filter_list():
 
 @app.route('/update_list', methods=['POST'])
 def update_list():
-    pk = request.form.get('pk')
-    value = request.form.get('value')
-    update_db(pk, value)
+    print('hello')
+    # res = {}
+    # a = request.json['disposition']
+    # print(a)
+    # pk = request.form.get('pk')
+    # value = request.form.get('value')
+    # comment = request.form.get('comment')
+    # print(pk)
+    # print(value)
+    # print(comment)
+    # update_db(pk, value)
+    # disposition = request.form.get('disposition')
+    # print(disposition)
     return json.dumps({'status': 'OK'})
 
 

@@ -8,7 +8,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
         <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
+        <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
@@ -33,19 +33,22 @@
       </form>
       <br><br><br>
       <div class="container">
-        <div class="panel panel-default"> 
-             <div class="panel-body"> 
-                 <div class="table-responsive"> 
+        <div class="panel panel-default">
+             <div class="panel-body">
+                 <div class="table-responsive">
+                    
                      <table id="ofac-table" class="table table-bordered table-striped">
                          <thead>
                              <tr>
                                  <th>_id</th>
-                                 <th>captured_date</th>
+                                 <th>order_date</th>
                                  <th>order_id</th>
                                  <th>cert_serial_number</th>
                                  <th>order_person_name</th>
                                  <th>order_org_name</th>
                                  <th>order_address</th>
+                                 <th>order_zip_code</th>
+                                 <th>order_email</th>
                                  <th>order_common_name</th>
                                  <th>disposition</th>
                                  <th>flagged_field</th>
@@ -53,33 +56,39 @@
                                  <th>greylist_reason</th>
                                  <th>greylist_match_value</th>
                                  <th>match_score</th>
+                                 <th>comment</th>
+                                 <th>action</th>
                              </tr>
                          </thead>
                          <tbody>
                             {% for row in ofac %}
                              <tr>
                                 <td data-pk="{{row._id}}">{{row._id}}</td>
-                                <td data-name="captured_date" class="captured_date" data-type="text" data-pk="{{row._id}}">{{row.captured_date}}</td>
-                                <td data-name="order_id" class="order_id" data-type="text" data-pk="{{row._id}}">{{row.order_id}}</td>
-                                <td data-name="cert_serial_number" class="cert_serial_number" data-type="text" data-pk="{{row._id}}">{{row.cert_serial_number}}</td>
-                                <td data-name="order_person_name" class="order_person_name" data-type="text" data-pk="{{row._id}}">{{row.order_person_name}}</td>
-                                <td data-name="order_org_name" class="order_org_name" data-type="text" data-pk="{{row._id}}">{{row.order_org_name}}</td>
-                                <td data-name="order_address" class="order_address" data-type="text" data-pk="{{row._id}}">{{row.order_order_address}}</td>
-                                <td data-name="order_common_name" class="order_common_name" data-type="text" data-pk="{{row._id}}">{{row.order_common_name}}</td>
-                                <td data-name="disposition" class="disposition" data-type="select" data-pk="{{row._id}}">{{row.disposition}}</td> 
-                                <td data-name="flagged_field" class="flagged_field" data-type="text" data-pk="{{row._id}}">{{row.flagged_field}}</td>
-                                <td data-name="sys_source" class="sys_source" data-type="text" data-pk="{{row._id}}">{{row.sys_source}}</td>
-                                <td data-name="greylist_reason" class="greylist_reason" data-type="text" data-pk="{{row._id}}">{{row.greylist_reason}}</td>
-                                <td data-name="greylist_match_value" class="greylist_match_value" data-type="text" data-pk="{{row._id}}">{{row.greylist_match_value}}</td>
-                                <td data-name="match_score" class="match_score" data-type="text" data-pk="{{row._id}}">{{row.match_score}}</td>
-                            {% endfor %}
+                                <td data-name="order_date" id="order_date" class="order_date" data-type="text" data-pk="{{row._id}}">{{row.order_date}}</td>
+                                <td data-name="order_id" id="order_id" class="order_id" data-type="text" data-pk="{{row._id}}">{{row.order_id}}</td>
+                                <td data-name="cert_serial_number" id="cert_serial_number" class="cert_serial_number" data-type="text" data-pk="{{row._id}}">{{row.cert_serial_number}}</td>
+                                <td data-name="order_person_name" id="order_person_name" class="order_person_name" data-type="text" data-pk="{{row._id}}">{{row.order_person_name}}</td>
+                                <td data-name="order_org_name" id="order_org_name" class="order_org_name" data-type="text" data-pk="{{row._id}}">{{row.order_org_name}}</td>
+                                <td data-name="order_address" id="order_address" class="order_address" data-type="text" data-pk="{{row._id}}">{{row.order_order_address}}</td>
+                                <td data-name="order_zip_code" id="order_zip_code" class="order_zip_code" data-type="text" data-pk="{{row._id}}">{{row.order_zip_code}}</td>
+                                <td data-name="order_email" id="order_email" class="order_email" data-type="text" data-pk="{{row._id}}">{{row.order_email}}</td>
+                                <td data-name="order_common_name" id="order_common_name" class="order_common_name" data-type="text" data-pk="{{row._id}}">{{row.order_common_name}}</td>
+                                <td data-name="disposition" id="disposition" class="disposition" data-type="select" data-pk="{{row._id}}">{{row.disposition}}</td>
+                                <td data-name="flagged_field" id="flagged_field" class="flagged_field" data-type="text" data-pk="{{row._id}}">{{row.flagged_field}}</td>
+                                <td data-name="sys_source" id="sys_source" class="sys_source" data-type="text" data-pk="{{row._id}}">{{row.sys_source}}</td>
+                                <td data-name="greylist_reason" id="greylist_reason" class="greylist_reason" data-type="text" data-pk="{{row._id}}">{{row.greylist_reason}}</td>
+                                <td data-name="greylist_match_value" id="greylist_match_value" class="greylist_match_value" data-type="text" data-pk="{{row._id}}">{{row.greylist_match_value}}</td>
+                                <td data-name="match_score" id="match_score" class="match_score" data-type="text" data-pk="{{row._id}}">{{row.match_score}}</td>
+                                <td data-name="comment" id="comment" class="comment" data-type="text" data-pk="{{row._id}}"></td>
+                                <td><input id="button" type="submit" name="action" value="Submit!"></td>
                              </tr>
+                            {% endfor %}
                          </tbody>
                      </table>
                  </div>
-             </div> 
-        </div> 
-    </div> 
+             </div>
+        </div>
+    </div>
   </body>
   <br><br><br>
   <footer>
