@@ -28,8 +28,8 @@ $(document).ready(function () {
       title: 'comment',
       type: 'POST'
   });
-  
-  $("#button").click(function() {   
+
+  $(".btn").click(function() {   
     var $order_id = $(this).closest("tr")  
                       .find(".order_id")     
                       .text(); 
@@ -44,7 +44,7 @@ $(document).ready(function () {
                        
     var $comment = $(this).closest("tr")  
                       .find(".comment")     
-                      .text();     
+                      .text();        
 
     var result = {
       order_id: $order_id,
@@ -54,10 +54,12 @@ $(document).ready(function () {
     };
     console.log(result);
 
-    $.post (
-      url = "/update_list",
-      result = result
-    )
+    // $.post (
+    //   url = "/update_list",
+    //   result = result
+    // )
   });
 });
+
+
   
