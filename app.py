@@ -34,21 +34,21 @@ def filter_list():
         return excel.make_response_from_records(ofac, file_type=extension_type, file_name=filename)
 
 
+@app.route('/updating_list', methods=['POST'])
+def updating_list():
+    print('updating disposition and comment')
+    return json.dumps({'status': 'OK'})
+
+
 @app.route('/update_list', methods=['POST'])
 def update_list():
-    print('hello')
-    # res = {}
-    # a = request.json['disposition']
-    # print(a)
-    # pk = request.form.get('pk')
-    # value = request.form.get('value')
-    # comment = request.form.get('comment')
-    # print(pk)
-    # print(value)
-    # print(comment)
-    # update_db(pk, value)
-    # disposition = request.form.get('disposition')
-    # print(disposition)
+    print('successful!')
+    order_id = request.form.get('order_id')
+    cert_serial_number = request.form.get('cert_serial_number')
+    disposition = request.form.get('disposition')
+    comment = request.form.get('comment')
+    record = {'order_id': order_id, 'cert_serial_number': cert_serial_number, 'disposition': disposition, 'comment': comment}
+    print(record)
     return json.dumps({'status': 'OK'})
 
 

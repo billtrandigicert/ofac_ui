@@ -5,7 +5,7 @@ $(document).ready(function () {
   $('#ofac-table').editable({
       container: 'body',
       selector: 'td.disposition',
-      url: '/update_list',
+      url: '/updating_list',
       title: 'disposition',
       type: 'POST',
       source: [
@@ -24,7 +24,7 @@ $(document).ready(function () {
   $('#ofac-table').editable({
       container: 'body',
       selector: 'td.comment',
-      url: '/update_list',
+      url: '/updating_list',
       title: 'comment',
       type: 'POST'
   });
@@ -46,12 +46,18 @@ $(document).ready(function () {
                       .find(".comment")     
                       .text();     
 
-    var res = {};
-    res.order_id = $order_id;
-    res.cert_serial_number = $cert_serial_number;
-    res.disposition = $disposition;
-    res.comment = $comment;
+    var res = {
+      order_id: $order_id,
+      cert_serial_number: $cert_serial_number,
+      disposition: $disposition,
+      comment: $comment
+    };
     console.log(res);
+
+    $.post (
+      url = "/update_list",
+      res = res
+    )
   });
 });
   
