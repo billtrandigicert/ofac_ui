@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import flask_excel as excel
-from datetime import timedelta
+from datetime import datetime, timedelta
 import json
 
 from service import *
@@ -43,12 +43,13 @@ def updating_list():
 @app.route('/update_list', methods=['POST'])
 def update_list():
     print('successful!')
+    _created = datetime.now()
     order_id = request.form.get('order_id')
     cert_serial_number = request.form.get('cert_serial_number')
     disposition = request.form.get('disposition')
     comment = request.form.get('comment')
-    record = {'order_id': order_id, 'cert_serial_number': cert_serial_number, 'disposition': disposition, 'comment': comment}
-    print(record)
+    print({'_created': _created, 'order_id': order_id, 'cert_serial_number': cert_serial_number, 'disposition': disposition, 'comment': comment})
+    insert_db(_created, order_id, cert_serial_number , disposition)
     return json.dumps({'status': 'OK'})
 
 

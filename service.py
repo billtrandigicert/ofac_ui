@@ -43,8 +43,7 @@ def get_match():
     connection = connect_db()
     with connection:
         with connection.cursor() as cursor:
-            cursor.execute(''' SELECT COUNT(order_id) AS count FROM data_warehouse.ofactory_results 
-                               WHERE grey_list = 1''')
+            cursor.execute(''' SELECT COUNT(order_id) AS count FROM data_warehouse.ofactory_disposition''')
             list_match = cursor.fetchone()
     return list_match
 
@@ -54,23 +53,24 @@ def get_dispositions():
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(''' WITH cte AS (
-                                SELECT grey_list, COUNT(order_id) AS count_
-                                FROM data_warehouse.ofactory_results
-                                GROUP BY grey_list
+                                SELECT disposition, COUNT(_id) AS count_
+                                FROM data_warehouse.ofactory_disposition
+                                GROUP BY disposition
                                 )
-                                SELECT grey_list, count_, ROUND(count_ * 100 / t.s, 2) AS percentage
+                                SELECT disposition, count_, ROUND(count_ * 100 / t.s, 2) AS percentage
                                 FROM cte
                                 CROSS JOIN (SELECT SUM(count_) AS s FROM cte) t;''')
             result = cursor.fetchall()
-    disposition = {item['grey_list']: item['percentage'] for item in result}
+    disposition = {item['disposition']: item['percentage'] for item in result}
     return disposition
 
 
-def update_db(pk, value):
+def insert_db(_created, order_id, cert_serial_number , disposition):
     connection = connect_db()
     with connection:
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE data_warehouse.ofactory_web SET comment = %s WHERE _id = %s ", (value, pk))
+            cursor.execute('''INSERT INTO data_warehouse.ofactory_disposition (_created, order_id, cert_serial_number , disposition)
+                                VALUES (%s, %s, %s, %s);''', (_created, order_id, cert_serial_number , disposition))
             connection.commit()
 
 

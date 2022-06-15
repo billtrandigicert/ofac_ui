@@ -20,6 +20,20 @@
     vertical-align: top;
     }
 
+.box-last {
+    border: 2px solid #000;
+    border-radius: 4px;
+    width: 360px;
+    height: 80px;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 18px;
+    text-align: center;
+    margin-left: 80px;
+    background-color: white;
+    vertical-align: top;
+    }
+
 .time {
     display: inline-block;
     font-family: Arial;

@@ -21,7 +21,7 @@
       <div class="box"><p><strong>OFAC Data Last Update</strong>  <br> {{ date['max_date'] }}</p></div>
       <div class="box"><p> <strong>Orders to Scan</strong>  <br> {{ order_no['count'] }}</p></div>
       <div class="box"><p><strong>Grey List/White List/Black List</strong><br>{{ list_match['count'] }}</p></div>
-      <div class="box"><p> <strong>Order Dispositions</strong> <br> passed: {{ disposition['passed'] }}% | whitelisted: {{ disposition['whitelist'] }}% | blacklisted: {{ disposition['blacklist'] }}%</p></div>
+      <div class="box-last"><p> <strong>Order Dispositions</strong> <br> whitelisted: {{ disposition['whitelist'] }}% | blacklisted: {{ disposition['blacklist'] }}%</p></div>
       <br><br><br>
       <form action="/filtered_list" method="post" class="time" id="time">
         <label for="from">From</label>

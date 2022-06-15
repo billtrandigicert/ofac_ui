@@ -46,17 +46,17 @@ $(document).ready(function () {
                       .find(".comment")     
                       .text();     
 
-    var res = {
+    var result = {
       order_id: $order_id,
       cert_serial_number: $cert_serial_number,
       disposition: $disposition,
       comment: $comment
     };
-    console.log(res);
+    console.log(result);
 
     $.post (
       url = "/update_list",
-      res = res
+      result = result
     )
   });
 });
