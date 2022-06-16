@@ -57,6 +57,20 @@
     opacity: 0.5;
 }
 
+.run {
+    height: 30px;
+    background-color: rgb(192, 192, 192);
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.run:hover {
+    opacity: 0.5;
+}
+
 .container {
     width: 95%;
     height: auto;
@@ -76,3 +90,10 @@
 .panel-body {
     border: none;
 }
+
+.footer {
+    color: black;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
