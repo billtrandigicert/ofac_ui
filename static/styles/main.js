@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  var dataTable = $('#ofac-table').DataTable({});
+  var dataTable = $('#ofac-table').DataTable();
   $.fn.editable.defaults.mode = 'inline';
 
   $('#ofac-table').editable({
@@ -20,13 +20,13 @@ $(document).ready(function () {
       }
   });
 
-  $('#ofac-table').editable({
-      container: 'body',
-      selector: 'td.comment',
-      url: '/updating_list',
-      title: 'comment',
-      type: 'POST'
-  });
+  // $('#ofac-table').editable({
+  //     container: 'body',
+  //     selector: 'td.comment',
+  //     url: '/updating_list',
+  //     title: 'comment',
+  //     type: 'POST'
+  // });
 
 
   $('#ofac-table tbody').on('click', '.btn', function() {   

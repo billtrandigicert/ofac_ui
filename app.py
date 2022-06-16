@@ -27,7 +27,7 @@ def filter_list():
     elif request.args.get('action') == 'Click here to download!':
         final = download_data(from_date=from_date, to_date=to_date)
         final = [{'order_id': record['order_id'], 'cert_serial_number': record['cert_serial_number'],
-                'disposition': record['disposition']} for record in final]
+                'disposition': record['disposition'], 'comment': record['comment']} for record in final]
 
         excel.init_excel(app)
         extension_type = "csv"
@@ -52,7 +52,7 @@ def update_list():
     print({'_created': _created, 'order_id': order_id, 'cert_serial_number': cert_serial_number, 'disposition': disposition, 'comment': comment})
     
     try:
-        insert_db(_created, order_id, cert_serial_number , disposition)
+        insert_db(_created, order_id, cert_serial_number , disposition, comment)
     except pymysql.err.IntegrityError:
         print("Order exists!")
         update_db(disposition, order_id)

@@ -67,12 +67,12 @@ def get_dispositions():
     return disposition
 
 
-def insert_db(_created, order_id, cert_serial_number , disposition):
+def insert_db(_created, order_id, cert_serial_number , disposition, comment):
     connection = connect_db()
     with connection:
         with connection.cursor() as cursor:
-            cursor.execute('''INSERT INTO data_warehouse.ofactory_disposition (_created, order_id, cert_serial_number , disposition)
-                                VALUES (%s, %s, %s, %s);''', (_created, order_id, cert_serial_number , disposition))
+            cursor.execute('''INSERT INTO data_warehouse.ofactory_disposition (_created, order_id, cert_serial_number , disposition, comment)
+                                VALUES (%s, %s, %s, %s, %s);''', (_created, order_id, cert_serial_number , disposition, comment))
             connection.commit()
 
 
@@ -89,7 +89,7 @@ def download_data(from_date, to_date):
     with connection:
         with connection.cursor() as cursor:
             cursor.execute('''
-                SELECT a.order_id, cert_serial_number, disposition, b.order_date 
+                SELECT a.order_id, cert_serial_number, disposition, b.order_date, comment 
                 FROM data_warehouse.ofactory_disposition a
                 LEFT JOIN data_warehouse.orion_api_2d_orders b ON a.order_id = b. order_id AND a.cert_serial_number = b.serial_number 
                 WHERE DATE(order_date) >= %s AND DATE(order_date) <= %s
