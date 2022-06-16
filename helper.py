@@ -1,5 +1,6 @@
 import pymysql.cursors
 import configparser
+import logging
 
 
 def connect_db():
@@ -12,3 +13,14 @@ def connect_db():
     return connection
 
 
+def logging_ofac():
+    logging.basicConfig(level=logging.INFO, filemode='a')
+
+    logger = logging.getLogger(__name__)
+
+    handler = logging.FileHandler('ofac.log')
+    formatter = logging.Formatter("[%(asctime)s] - %(levelname)s - %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    
+    return logger

@@ -1,4 +1,4 @@
-from db import connect_db
+from helper import connect_db
 
 
 def view_data(from_date, to_date):

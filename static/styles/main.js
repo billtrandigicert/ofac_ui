@@ -10,6 +10,7 @@ $(document).ready(function () {
       url: '/updating_list',
       title: 'disposition',
       type: 'POST',
+      send: 'always',
       source: [
         {value: 'whitelist', text: 'whitelist'},
         {value: 'blacklist', text: 'blacklist'}
@@ -46,6 +47,15 @@ $(document).ready(function () {
       disposition: $disposition,
       comment: $comment
     };
+
+    // if ($disposition == 'greylist') {
+    //   alert('Please choose disposition as whitelist or blacklist before submitting');
+    // } else {
+    //   $.post (
+    //     url = "/update_list",
+    //     result = result
+    //   )
+    // }
 
     $.post (
       url = "/update_list",

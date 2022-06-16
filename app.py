@@ -1,3 +1,4 @@
+import imp
 from flask import Flask, render_template, request
 import flask_excel as excel
 from datetime import datetime, timedelta
@@ -5,12 +6,16 @@ import json
 import pymysql
 
 from service import *
+from helper import logging_ofac
 
 app = Flask(__name__)
+logger = logging_ofac()
 
 
 @app.route('/')
 def view_list():
+    logger.info('View data!')
+
     latest_date = get_date()['max_date']
     last_week = latest_date - timedelta(days=7)
     return render_template("index.html", date=get_date(), order_no=get_orders(), list_match=get_match(),
@@ -22,9 +27,13 @@ def filter_list():
     from_date = request.args.get("from")
     to_date = request.args.get("to")
     if request.args.get('action') == 'Run Report':
+        logger.info('Filter data & Run report!')
+
         return render_template("index.html", date=get_date(), order_no=get_orders(), list_match=get_match(),
                             disposition=get_dispositions(), ofac=view_data(from_date=from_date, to_date=to_date))
     elif request.args.get('action') == 'Click here to download!':
+        logger.info('Download CSV successfully!')
+
         final = download_data(from_date=from_date, to_date=to_date)
         final = [{'order_id': record['order_id'], 'cert_serial_number': record['cert_serial_number'],
                 'disposition': record['disposition'], 'comment': record['comment']} for record in final]
@@ -37,27 +46,28 @@ def filter_list():
 
 @app.route('/updating_list', methods=['POST'])
 def updating_list():
-    print('updating disposition and comment')
+    logger.info('Updating disposition & comment')
     return json.dumps({'status': 'OK'})
 
 
 @app.route('/update_list', methods=['POST'])
 def update_list():
-    print('successful!')
     _created = datetime.now()
     order_id = request.form.get('order_id')
     cert_serial_number = request.form.get('cert_serial_number')
     disposition = request.form.get('disposition')
     comment = request.form.get('comment')
-    print({'_created': _created, 'order_id': order_id, 'cert_serial_number': cert_serial_number, 'disposition': disposition, 'comment': comment})
+
+    logger.info(f"User submitted: '_created': {_created}, 'order_id': {order_id}, 'cert_serial_number': {cert_serial_number}, 'disposition': {disposition}, 'comment': {comment}")
     
     try:
         insert_db(_created, order_id, cert_serial_number , disposition, comment)
-    except pymysql.err.IntegrityError:
-        print("Order exists!")
+        logger.info(f'Insert order {order_id} to database successfully!')
+    except pymysql.err.IntegrityError:        
         update_db(disposition, order_id)
+        logger.error(f"pymysql.err.IntegrityError due to duplicate {order_id}!")
     except pymysql.err.DataError:
-        print('Fixing...')
+        logger.error("pymysql.err.DataError because x-editable call to ajax call!")
     return json.dumps({'status': 'OK'})
 
 
