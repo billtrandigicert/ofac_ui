@@ -62,6 +62,17 @@
     height: auto;
 }
 
+.btn {
+    background-color: rgb(192, 192, 192);
+    color: black;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn:hover {
+    opacity: 0.5;
+}
+
 .panel-body {
     border: none;
 }

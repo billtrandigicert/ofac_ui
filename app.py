@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import flask_excel as excel
 from datetime import datetime, timedelta
 import json
+import pymysql
 
 from service import *
 
@@ -16,22 +17,22 @@ def view_list():
                            disposition=get_dispositions(), ofac=view_data(from_date=last_week, to_date=latest_date))
 
 
-@app.route('/filtered_list', methods=["POST"])
+@app.route('/filtered_list')
 def filter_list():
-    from_date = request.form.get("from")
-    to_date = request.form.get("to")
-    if request.form['action'] == 'Run Report':
+    from_date = request.args.get("from")
+    to_date = request.args.get("to")
+    if request.args.get('action') == 'Run Report':
         return render_template("index.html", date=get_date(), order_no=get_orders(), list_match=get_match(),
                             disposition=get_dispositions(), ofac=view_data(from_date=from_date, to_date=to_date))
-    elif request.form['action'] == 'Click here to download!':
-        ofac = view_data(from_date=from_date, to_date=to_date)
-        ofac = [{'order_id': record['order_id'], 'cert_serial_number': record['cert_serial_number'],
-                'disposition': record['disposition']} for record in ofac]
+    elif request.args.get('action') == 'Click here to download!':
+        final = download_data(from_date=from_date, to_date=to_date)
+        final = [{'order_id': record['order_id'], 'cert_serial_number': record['cert_serial_number'],
+                'disposition': record['disposition']} for record in final]
 
         excel.init_excel(app)
         extension_type = "csv"
         filename = "ofactory_legal_disposition" + "." + extension_type
-        return excel.make_response_from_records(ofac, file_type=extension_type, file_name=filename)
+        return excel.make_response_from_records(final, file_type=extension_type, file_name=filename)
 
 
 @app.route('/updating_list', methods=['POST'])
@@ -49,7 +50,14 @@ def update_list():
     disposition = request.form.get('disposition')
     comment = request.form.get('comment')
     print({'_created': _created, 'order_id': order_id, 'cert_serial_number': cert_serial_number, 'disposition': disposition, 'comment': comment})
-    insert_db(_created, order_id, cert_serial_number , disposition)
+    
+    try:
+        insert_db(_created, order_id, cert_serial_number , disposition)
+    except pymysql.err.IntegrityError:
+        print("Order exists!")
+        update_db(disposition, order_id)
+    except pymysql.err.DataError:
+        print('Why???')
     return json.dumps({'status': 'OK'})
 
 

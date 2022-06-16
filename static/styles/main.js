@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  var dataTable = $('#ofac-table').DataTable();
+  var dataTable = $('#ofac-table').DataTable({});
   $.fn.editable.defaults.mode = 'inline';
 
   $('#ofac-table').editable({
@@ -9,7 +9,6 @@ $(document).ready(function () {
       title: 'disposition',
       type: 'POST',
       source: [
-        {value: 'greylist', text: 'greylist'},
         {value: 'whitelist', text: 'whitelist'},
         {value: 'blacklist', text: 'blacklist'}
      ],
@@ -29,7 +28,8 @@ $(document).ready(function () {
       type: 'POST'
   });
 
-  $(".btn").click(function() {   
+
+  $('#ofac-table tbody').on('click', '.btn', function() {   
     var $order_id = $(this).closest("tr")  
                       .find(".order_id")     
                       .text(); 
@@ -52,7 +52,6 @@ $(document).ready(function () {
       disposition: $disposition,
       comment: $comment
     };
-    console.log(result);
 
     $.post (
       url = "/update_list",
