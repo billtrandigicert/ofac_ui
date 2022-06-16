@@ -57,7 +57,7 @@ def update_list():
         print("Order exists!")
         update_db(disposition, order_id)
     except pymysql.err.DataError:
-        print('Why???')
+        print('Fixing...')
     return json.dumps({'status': 'OK'})
 
 
